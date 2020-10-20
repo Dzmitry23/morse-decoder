@@ -38,7 +38,22 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let stringsOfTen = expr.match(/.{10}/g);
+    let reducer = (a, b) => a + (b === '10' ? '.' : '-');
+    let result = '';
+
+    for (const str of stringsOfTen) {
+        if (str === '**********') {
+            result += ' ';
+            continue;
+        }
+
+        let stringsOfTwo = (+str).toString().match(/.{2}/g);
+        let code = stringsOfTwo.reduce(reducer, '');
+        result += MORSE_TABLE[code];
+    }
+
+    return result;
 }
 
 module.exports = {
